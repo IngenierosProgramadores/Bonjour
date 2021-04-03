@@ -350,7 +350,7 @@ export default {
         })
       } else {
         var formData = this.user.fields
-        api.post('http://localhost/CIQuasar/back/public/UsersController/create', formData).then(({ data }) => {
+        api.post('http://localhost/Bonjour/back/public/UsersController/create', formData).then(({ data }) => {
           console.log(data)
           this.$q.notify({
             message: data.message,

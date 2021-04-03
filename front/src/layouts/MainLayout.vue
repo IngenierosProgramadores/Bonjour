@@ -45,7 +45,7 @@
 
           <q-item clickable>
             <q-item-section>
-              <q-item-label @click="logOut()">Cerrar Sesión</q-item-label>
+              <q-item-label @click.native="logOut()">Cerrar Sesión</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -73,7 +73,7 @@ export default ({
       menuNotiOver: false,
       listNotiOver: false,
       data: [],
-      url: 'http://localhost/CIQuasar/back/public/'
+      url: 'http://localhost/Bonjour/back/public/'
     }
   },
   created () {

@@ -53,7 +53,8 @@ class UsersController extends AuthController
 	}
 	public function getUser ($id) {
 		$user = new User();
-        $data = $user->where('id',$id)->first();
+        $query = $user->query("SELECT *, TO_CHAR(birthdate, 'dd/mm/yyyy') as birthdate FROM users WHERE id=".$id.";");
+		$data = $query->getRowArray();
         return $this->respond($data);
 	}
 	public function create () {

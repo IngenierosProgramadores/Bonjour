@@ -24,7 +24,7 @@ export default {
   },
   actions: {
     getProfile: async (context) => {
-      var response = await api.get('http://localhost/CIQuasar/back/public/UsersController/profile')
+      var response = await api.get('http://localhost/Bonjour/back/public/UsersController/profile')
       if (response.data.result) {
         context.commit('setId', response.data.user.id)
         context.commit('setNickname', response.data.user.name)

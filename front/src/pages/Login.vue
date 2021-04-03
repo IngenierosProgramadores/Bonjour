@@ -116,7 +116,7 @@ export default {
         password: this.password
       }
       this.loading = true
-      api.post('http://localhost/CIQuasar/back/public/AuthController/login', params).then(({ data }) => {
+      api.post('http://localhost/Bonjour/back/public/AuthController/login', params).then(({ data }) => {
         this.loading = false
         console.log(data)
         if (data.result) {

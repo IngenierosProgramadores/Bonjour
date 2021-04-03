@@ -13,12 +13,12 @@
         </div> -->
 
         <div class="row justify-center">
-          <div class="col-xs-12 col-sm-2 q-pa-md">
+          <div class="col-xs-6 col-md-2 q-pa-md">
             <div class="row q-col-gutter-sm bg-white border-panel">
               <div class="col-xs-12 col-sm-12">
                 <div class="q-pa-md text-left" style="padding-bottom: 0px">
                     <q-avatar size="130px" color="" text-color="white">
-                      <img v-bind:src="'http://localhost/CIQuasar/front/src/assets/Avatares/' + avatar" />
+                      <img v-bind:src="'http://localhost/Bonjour/front/src/assets/Avatares/' + avatar" />
                       <!-- <img :src="this.man" alt="Perfil" style="padding: 5px"> -->
                     </q-avatar>
                 </div>
@@ -26,23 +26,47 @@
                 <div class="q-pa-md text-left" style="font-size: 17px">
                     <label for="" class="text-bold text text-grey-9">MI CUENTA</label>
                     <hr>
-                    <q-btn flat class="full-width" align="left" dense>Mi Perfil</q-btn><br>
-                    <q-btn flat class="full-width" align="left" dense>Insignias</q-btn><br>
-                    <q-btn flat class="full-width" align="left" dense>Detalles</q-btn><br>
-                    <q-btn flat class="full-width" align="left" dense>Cerra Sesión</q-btn><br>
+                    <q-btn @click="changeModal(1)" flat class="full-width" align="left" dense no-caps>Mi Perfil</q-btn><br>
+                    <q-btn @click="changeModal(2)" flat class="full-width" align="left" dense no-caps>Fotografía</q-btn><br>
+                    <q-btn flat class="full-width" align="left" dense no-caps>Insignias</q-btn><br>
+                    <q-btn flat class="full-width" align="left" dense no-caps>Detalles</q-btn><br>
+                    <q-btn flat class="full-width" align="left" dense no-caps>Cerrar Sesión</q-btn><br>
                 </div>
                 <br><br>
                 <div class="q-pa-md text-left" style="font-size: 17px">
                     <label for="" class="text-bold text text-grey-9">MIS CURSOS</label>
                     <hr>
-                    <label for="" class="text-grey-9">Ingles A1</label>
+                    <q-btn v-for="(value,key) in classes" highlight separator  v-bind:key="key" flat class="full-width" align="left" dense no-caps>{{ value }}</q-btn><br>
                     <br>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-4 q-pa-md">
-            <div class="row bg-white border-panel">
+          <div class="col-xs-6 col-md-4 q-pa-md">
+            <div class="row bg-white border-panel" v-show="this.options.photo">
+              <div class="col-sm-12">
+                <div class="q-pa-md text-center">
+                    <label for="" class="text-h4 text-bold text-grey-9">¡Haz tu mejor pose!</label><hr>
+                </div>
+                <div class="q-pad-md text-center">
+                  <label for="" class="text-h6">Personaliza aún más tu perfil <br>con una fotografía tuya</label>
+                </div>
+                <br>
+                <div class="q-pa-md row items-start">
+                  <q-uploader
+                    url="http://localhost:4444/upload"
+                    label="Subir Fotografía"
+                    color="accent"
+                    square
+                    flat
+                    auto-upload
+                    bordered
+                    class="full-width"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row bg-white border-panel" v-show="this.options.profile">
               <div class="col-sm-12">
                 <div class="q-pa-md text-center">
                     <label for="" class="text-h4 text-bold text text-grey-9">Mi perfil</label><hr>
@@ -67,13 +91,13 @@
               </div>
               <div class="col-sm-12">
                 <div class="q-pa-sm text-center">
-                    <q-avatar size="100px" color="" text-color="white" @click="man()">
+                    <q-avatar size="100px" color="" text-color="white" @click="sex(1)">
                       <img src="../../assets/Avatares/man.png" alt="Perfil" style="padding: 5px">
                     </q-avatar>
-                    <q-avatar size="100px" color="" text-color="white" @click="woman()">
+                    <q-avatar size="100px" color="" text-color="white" @click="sex(2)">
                       <img src="../../assets/Avatares/woman.png" alt="Perfil" style="padding: 5px">
                     </q-avatar>
-                    <q-avatar size="100px" color="" text-color="white" @click="gay()">
+                    <q-avatar size="100px" color="" text-color="white" @click="sex(3)">
                       <img src="../../assets/Avatares/gay.png" alt="Perfil" style="padding: 5px">
                     </q-avatar>
                 </div>
@@ -83,7 +107,7 @@
                     <label for="" class="text-h6 text-bold text text-grey-9">Información de contacto</label><hr>
                 </div>
               </div>
-              <div class="col-xs-12 col-sm-12">
+              <div class="col-xs-12 col-sm-6">
                 <q-input
                   name="name"
                   color="accent"
@@ -100,7 +124,7 @@
                   </template>
                 </q-input>
               </div>
-              <div class="col-xs-12 col-sm-12">
+              <div class="col-xs-12 col-sm-6">
                 <q-input
                   color="accent"
                   bg-color="white"
@@ -116,7 +140,7 @@
                   </template>
                 </q-input>
               </div>
-              <div class="col-xs-12 col-sm-12">
+              <div class="col-xs-12 col-sm-6">
                 <q-input
                   color="accent"
                   bg-color="white"
@@ -131,7 +155,7 @@
                   </template>
                 </q-input>
               </div>
-              <div class="col-xs-12 col-sm-12 text-center">
+              <div class="col-xs-12 col-sm-6 text-center">
                   <q-select
                   color="accent"
                   bg-color="white"
@@ -158,7 +182,7 @@
                   </q-popup-proxy>
                   </q-select>
               </div>
-              <div class="col-xs-12 col-sm-12">
+              <div class="col-xs-12 col-sm-6">
                 <q-input
                   color="accent"
                   bg-color="white"
@@ -182,7 +206,7 @@
                   </template>
                 </q-input>
               </div>
-              <div class="col-xs-12 col-sm-12">
+              <div class="col-xs-12 col-sm-6">
                 <q-select
                   color="accent"
                   bg-color="white"
@@ -198,7 +222,7 @@
                   </template>
                 </q-select>
               </div>
-              <div class="col-xs-12 col-sm-12">
+              <div class="col-xs-12 col-sm-6">
                 <q-input
                   color="accent"
                   bg-color="white"
@@ -214,7 +238,7 @@
                   </template>
                 </q-input>
               </div>
-              <div class="col-xs-12 col-sm-12">
+              <div class="col-xs-12 col-sm-6">
                 <q-input
                   color="accent"
                   bg-color="white"
@@ -273,13 +297,19 @@ export default {
           birthdate: null,
           country: null,
           gender: null,
-          phone: null
+          phone: null,
+          description: null
         }
       },
+      classes: ['Inglés A1', 'Inglés A2', 'Inglés A3'],
       genders: ['MASCULINO', 'FEMENINO', 'PERSONALIZADO'],
       isPwd: true,
       isPwdR: true,
-      url: 'http://localhost/CIQuasar/back/public/'
+      url: 'http://localhost/Bonjour/back/public/',
+      options: {
+        profile: true,
+        photo: false
+      }
     }
   },
   computed: {
@@ -329,19 +359,37 @@ export default {
     }
   },
   methods: {
-    man () {
-      console.log('Hombre')
-      this.avatar = 'man.png'
+    changeModal (type) {
+      this.options.photo = false
+      switch (type) {
+        case 1:
+          this.options.profile = true
+          break
+        case 2:
+          this.options.profile = false
+          this.options.photo = true
+          break
+        default:
+          break
+      }
     },
-    woman () {
-      this.avatar = 'woman.png'
-    },
-    gay () {
-      this.avatar = 'gay.png'
+    sex (type) {
+      switch (type) {
+        case 1:
+          this.avatar = 'man.png'
+          break
+        case 2:
+          this.avatar = 'woman.png'
+          break
+        case 3:
+          this.avatar = 'gay.png'
+          break
+      }
     },
     fetchFromServer () {
       const id = Number(this.$store.getters['users/id'])
-      api.get(`http://localhost/CIQuasar/back/public/UsersController/getUser/${id}`).then(({ data }) => {
+      api.get(`http://localhost/Bonjour/back/public/UsersController/getUser/${id}`).then(({ data }) => {
+        console.log(data)
         this.user.fields = data
         this.user.fields.password = ''
       })
