@@ -1,6 +1,6 @@
 <template>
-  <q-layout> <!--view="lHh Lpr lFf"-->
-    <q-header elevated>
+  <q-layout view="hHh lpR fFf"> <!--view="lHh Lpr lFf"-->
+    <q-header elevated style="background: #5404a4">
       <q-toolbar>
         <q-toolbar-title>
           Bonjour Vallarta
@@ -10,7 +10,7 @@
         <q-list highlight separator @mouseover.native="listNotiOver = true" @mouseout.native="listNotiOver = false">
           <q-item  v-for="(value,key) in data" highlight separator  v-bind:key="key">
             <q-item-section>
-              <q-item-label >{{ value.name + ' ' + value.apellido}}</q-item-label>
+              <q-item-label >{{ value.name + ' ' + value.surname}}</q-item-label>
               <q-item-label caption lines="2">{{ value.email }}</q-item-label>
             </q-item-section>
 
@@ -24,13 +24,13 @@
       </q-btn-dropdown>
       <q-btn-dropdown auto-close  stretch color="white" label="" flat dropdown-icon="account_circle" no-icon-animation v-model="menuUser" @mouseover.native="menuUserOver = true" @mouseout.native="menuUserOver = false">
         <q-list highlight separator @mouseover.native="listUserOver = true" @mouseout.native="listUserOver = false">
-          <q-item clickable>
+          <q-item clickable @click="profile()">
             <q-item-section avatar>
               <q-avatar color="orange" text-color="white">E</q-avatar>
             </q-item-section>
-            <q-item-section>
-              <q-item-label>Edgar Meneses</q-item-label>
-              <q-item-label caption> menesesedgar1999@gmail.com</q-item-label>
+            <q-item-section >
+              <q-item-label >{{ name }}</q-item-label>
+              <q-item-label caption> {{ email }}</q-item-label>
             </q-item-section>
           </q-item>
 
@@ -45,20 +45,22 @@
 
           <q-item clickable>
             <q-item-section>
-              <q-item-label>Cerrar Sesión</q-item-label>
+              <q-item-label @click="logOut()">Cerrar Sesión</q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
       </q-btn-dropdown>
       </q-toolbar>
     </q-header>
+    <q-page-container style="background-color: white;">
+      <router-view />
+    </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import { debounce } from 'quasar'
-import axios from 'axios'
-
+import { debounce, openURL } from 'quasar'
+import api from '../commons/api'
 export default ({
   name: 'MainLayout',
   components: { },
@@ -70,18 +72,36 @@ export default ({
       menuNoti: false,
       menuNotiOver: false,
       listNotiOver: false,
-      data: []
+      data: [],
+      url: 'http://localhost/CIQuasar/back/public/'
     }
+  },
+  created () {
   },
   mounted () {
     this.fetchFromServer()
   },
+  computed: {
+    name () {
+      return this.$store.getters['users/nickname']
+    },
+    email () {
+      return this.$store.getters['users/email']
+    }
+  },
   methods: {
-    // https://randomuser.me/api/?results=500
+    openURL,
+    profile () {
+      console.log('Abrir perfil')
+      this.$router.push('/Profile')
+    },
+    logOut () {
+      localStorage.removeItem('JWT')
+      window.location.reload()
+    },
     fetchFromServer () {
-      axios.get('http://localhost/bonjour/php/api.php?evento=mostrar').then(data => {
-        console.log(data)
-        this.data = data.data.alumnos
+      api.get(this.url + 'UsersController/getUsers').then(({ data }) => {
+        this.data = data.users
       })
     },
     debounceFuncU: debounce(function () { this.checkMenuUser() }, 300),

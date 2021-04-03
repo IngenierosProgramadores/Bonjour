@@ -64,7 +64,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import api from '../commons/api'
 export default {
   name: 'Login',
@@ -73,37 +72,35 @@ export default {
       email: null,
       password: null,
       isPwd: true,
-      loading: false,
-      url: 'http://localhost/CIQuasar/back/'
+      loading: false
     }
   },
   // computed: {},
   // beforeCreate () {},
   created () {
-    // const JWT = localStorage.getItem('JWT')
-    // if (JWT !== null && JWT !== '') {
-    //   this.$axios.defaults.headers.common.Authorization = `Bearer ${JWT}`
+    const JWT = localStorage.getItem('JWT')
+    if (JWT !== null && JWT !== '') {
+      this.$axios.defaults.headers.common.Authorization = `Bearer ${JWT}`
 
-    //   this.$store.dispatch('users/getProfile').then(() => {
-    //     const userWasLoaded = this.$store.getters['users/wasLoaded']
-    //     if (userWasLoaded) {
-    //       this.$router.push('/dashboard')
-    //     } else {
-    //       // Se queda en LOGIN
-    //     }
-    //   }).catch(error => {
-    //     localStorage.removeItem('JWT')
-    //     window.location.reload()
-    //     console.error(error)
-    //   })
-    // } else {
-    //   // Se queda en LOGIN
-    // }
+      this.$store.dispatch('users/getProfile').then(() => {
+        const userWasLoaded = this.$store.getters['users/wasLoaded']
+        if (userWasLoaded) {
+          this.$router.push('/')
+        } else {
+          // Se queda en LOGIN
+        }
+      }).catch(error => {
+        console.log('ERROR')
+        localStorage.removeItem('JWT')
+        window.location.reload()
+        console.error(error)
+      })
+    } else {
+      // Se queda en LOGIN
+    }
   },
   mounted () {
-    api.get(this.url + 'user/showAll').then(({ data }) => {
-      console.log(data)
-    })
+
   },
   methods: {
     register () {
@@ -111,18 +108,49 @@ export default {
     },
     magic () {
       this.email = 'edgar@ant.com.mx'
-      this.password = 'quetzalcore'
+      this.password = 'ingepro123'
     },
     logIn () {
       const params = {
         email: this.email,
         password: this.password
       }
-      console.log(params)
       this.loading = true
-      axios.post(this.url + 'user/login', params).then(({ data }) => {
+      api.post('http://localhost/CIQuasar/back/public/AuthController/login', params).then(({ data }) => {
         this.loading = false
         console.log(data)
+        if (data.result) {
+          localStorage.setItem('JWT', data.jwt)
+          this.$axios.defaults.headers.common.Authorization = `Bearer ${data.jwt}`
+          this.$store.dispatch('users/getProfile').then(({ data }) => {
+            this.$router.push(data.result ? '/' : '/Login')
+          }).catch(error => {
+            localStorage.removeItem('JWT')
+            window.location.reload()
+            console.error(error)
+          })
+        } else {
+          this.$q.dialog({
+            title: data.message.title,
+            message: data.message.content,
+            persistent: true,
+            class: 'bg-dark text-white',
+            style: 'width: 350px;'
+          })
+        }
+      }).catch(error => {
+        this.loading = false
+        console.error(error)
+      })
+    },
+    logIn_P () {
+      const params = {
+        email: this.email,
+        password: this.password
+      }
+      this.loading = true
+      api.post(this.url + 'user', params).then(({ data }) => {
+        this.loading = false
         if (data.result) {
           this.$router.push(data.result ? '/' : '/login')
         } else {
@@ -139,9 +167,6 @@ export default {
         this.loading = false
         console.log(error)
       })
-    },
-    nope () {
-      // NOPE
     }
   }
 }

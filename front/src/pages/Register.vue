@@ -2,18 +2,34 @@
   <q-layout>
     <q-header elevated style="background: #5404a4">
       <q-toolbar>
-        <q-breadcrumbs align="left" style="font-size: 20px">
+        <q-breadcrumbs style="font-size: 20px">
           <q-breadcrumbs-el label="" icon="arrow_back" to="/Login" class="text-white" />
           <q-breadcrumbs-el label="Registro" />
         </q-breadcrumbs>
+          <q-toolbar-title></q-toolbar-title>
+          <img src="../assets/header2.png" height="50px" style="padding:6px">
       </q-toolbar>
+    <!-- <q-toolbar class="bg-primary glossy text-white">
+        <q-breadcrumbs style="font-size: 20px">
+          <q-breadcrumbs-el label="" icon="arrow_back" to="/Login" class="text-white" />
+          <q-breadcrumbs-el label="Registro" />
+        </q-breadcrumbs>
+      <q-btn flat round dense icon="menu" class="q-mr-sm" />
+      <q-avatar>
+        <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+      </q-avatar>
+
+      <q-toolbar-title></q-toolbar-title>
+
+      <q-btn flat round dense icon="whatshot" />
+    </q-toolbar> -->
     </q-header>
     <q-page-container style="background-color: #F0F0F0F0;">
       <q-page>
         <div class="q-pa-md">
           <div class="row justify-center">
-            <div class="col-md-6 q-pa-md" style="padding-bottom:">
-              <img src="../assets/Recurso4.png" alt="Iniciar Sesión" width="100%" >
+            <div class="col-md-6 q-pa-md text-center" style="padding-bottom:">
+              <img src="../assets/Recurso3.png" alt="Iniciar Sesión" width="50%" >
             </div>
           </div>
           <div class="row justify-center">
@@ -246,8 +262,7 @@ export default {
       },
       genders: ['MASCULINO', 'FEMENINO', 'PERSONALIZADO'],
       isPwd: true,
-      isPwdR: true,
-      url: 'http://localhost/CIQuasar/back/'
+      isPwdR: true
     }
   },
   beforeCreate () {
@@ -327,21 +342,29 @@ export default {
         return false
       }
       this.user.fields.birthdate = this.formatDate(this.user.fields.birthdate)
-      var formData = this.user.fields
-      api.post(this.url + 'user/addUser', formData).then(({ data }) => {
-        console.log(data)
+      if (this.user.fields.password !== this.user.fields.repPassword) {
         this.$q.notify({
-          message: data.msg,
+          message: 'Las contraseñas no coinciden',
           position: 'top',
-          color: (data.msg ? 'positive' : 'warning')
+          color: 'warning'
         })
-        if (data.error) {
-          this.$q.loading.hide()
-          this.$router.push('/Login')
-        } else {
-          this.$q.loading.hide()
-        }
-      })
+      } else {
+        var formData = this.user.fields
+        api.post('http://localhost/CIQuasar/back/public/UsersController/create', formData).then(({ data }) => {
+          console.log(data)
+          this.$q.notify({
+            message: data.message,
+            position: 'top',
+            color: (data.result ? 'positive' : 'warning')
+          })
+          if (data.error) {
+            this.$q.loading.hide()
+            this.$router.push('/Login')
+          } else {
+            this.$q.loading.hide()
+          }
+        })
+      }
     }
   }
 }

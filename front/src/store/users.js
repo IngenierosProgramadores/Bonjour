@@ -5,7 +5,7 @@ export default {
   state: {
     id: null,
     nickname: null,
-    roles: null,
+    email: null,
     wasLoaded: false
   },
   mutations: {
@@ -15,8 +15,8 @@ export default {
     setNickname (state, nickname) {
       state.nickname = nickname
     },
-    setRoles (state, roles) {
-      state.roles = roles
+    setEmail (state, email) {
+      state.email = email
     },
     setWasLoaded (state, wasLoaded) {
       state.wasLoaded = wasLoaded
@@ -24,11 +24,11 @@ export default {
   },
   actions: {
     getProfile: async (context) => {
-      var response = await api.get('users/profile')
+      var response = await api.get('http://localhost/CIQuasar/back/public/UsersController/profile')
       if (response.data.result) {
         context.commit('setId', response.data.user.id)
-        context.commit('setNickname', response.data.user.nickname)
-        context.commit('setRoles', response.data.user.roles)
+        context.commit('setNickname', response.data.user.name)
+        context.commit('setEmail', response.data.user.email)
         context.commit('setWasLoaded', true)
       }
       return response
@@ -37,7 +37,7 @@ export default {
   getters: {
     id: state => state.id,
     nickname: state => state.nickname,
-    roles: state => state.roles,
+    email: state => state.email,
     wasLoaded: state => state.wasLoaded
   }
 }
