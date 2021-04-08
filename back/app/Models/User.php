@@ -7,5 +7,5 @@ class User extends Model{
     protected $table      = 'users';
     // Uncomment below if you want add primary key
     protected $primaryKey = 'id';
-    protected $allowedFields = ['name','surname','email','birthdate','password','country','gender'];
+    protected $allowedFields = ['name','surname','email','birthdate','password','country','gender','phone','img'];
 }

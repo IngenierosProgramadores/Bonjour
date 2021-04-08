@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
-
 const api = {
+  baseUrl: 'http://localhost/Bonjour/back/public/',
   request: (config) => axios.request(qs.stringify(config)),
   get: (url, config) => axios.get(url, qs.stringify(config)),
   post: (url, config) => axios.post(url, qs.stringify(config)),

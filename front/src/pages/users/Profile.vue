@@ -18,7 +18,8 @@
               <div class="col-xs-12 col-sm-12">
                 <div class="q-pa-md text-left" style="padding-bottom: 0px">
                     <q-avatar size="130px" color="" text-color="white">
-                      <img v-bind:src="'http://localhost/Bonjour/front/src/assets/Avatares/' + avatar" />
+                      <!-- <img v-if="this.user.fields.img !== null" :src="'http://localhost/Bonjour/back/public/' + user.fields.img"/> -->
+                      <img :src="'http://localhost/Bonjour/front/src/assets/Avatares/' + avatar" alt="Perfil">
                       <!-- <img :src="this.man" alt="Perfil" style="padding: 5px"> -->
                     </q-avatar>
                 </div>
@@ -43,7 +44,7 @@
             </div>
           </div>
           <div class="col-xs-6 col-md-4 q-pa-md">
-            <div class="row bg-white border-panel" v-show="this.options.photo">
+            <div class="row bg-white border-panel" v-show="this.options.profile">
               <div class="col-sm-12">
                 <div class="q-pa-md text-center">
                     <label for="" class="text-h4 text-bold text-grey-9">¡Haz tu mejor pose!</label><hr>
@@ -52,17 +53,28 @@
                   <label for="" class="text-h6">Personaliza aún más tu perfil <br>con una fotografía tuya</label>
                 </div>
                 <br>
-                <div class="q-pa-md row items-start">
-                  <q-uploader
-                    url="http://localhost:4444/upload"
-                    label="Subir Fotografía"
-                    color="accent"
-                    square
-                    flat
-                    auto-upload
-                    bordered
-                    class="full-width"
-                  />
+                <div class="q-pa-md row ">
+                  <q-field filled class="col-sm-12 bg-accent">
+                    <input
+                      type="file"
+                      bg-color="none"
+                      ref="photoProductRef"
+                      accept=".jpg, image/*"
+                      style="display: none;"
+                      name="imagen"
+                      @change="uploadPhoto"
+                    />
+                    <template v-slot:control>
+                      <div class="self-center full-width no-outline text-white text-h6 text-center" tabindex="0">Foto de Perfil</div>
+                    </template>
+                    <template v-slot:append>
+                      <q-btn round dense flat icon="add" color="white"  @click="changePP()"/>
+                      <!-- <q-badge color="red" floating>No hay imagen cargada</q-badge> -->
+                    </template>
+                    <template v-slot:prepend>
+                    <q-icon color="white" name="camera" />
+                  </template>
+                  </q-field>
                 </div>
               </div>
             </div>
@@ -102,7 +114,7 @@
                     </q-avatar>
                 </div>
               </div>
-              <div class="col-x2-12 col-sm-12">
+              <div class="col-xs-12 col-sm-12">
                 <div class="q-pa-md text-left">
                     <label for="" class="text-h6 text-bold text text-grey-9">Información de contacto</label><hr>
                 </div>
@@ -155,7 +167,7 @@
                   </template>
                 </q-input>
               </div>
-              <div class="col-xs-12 col-sm-6 text-center">
+              <div class="col-xs-12 col-sm-6 text-center ">
                   <q-select
                   color="accent"
                   bg-color="white"
@@ -254,7 +266,7 @@
                 </q-input>
               </div>
               <div class="col-xs-12 col-sm-12">
-                <q-btn  color="positive" style="float: right; margin-top:12px; background: #5404a4 " icon="how_to_reg" label="Actualizar" @click="createUser()" />
+                <q-btn  color="positive" style="float: right; margin-top:12px; background: #5404a4 " icon="how_to_reg" label="Actualizar" @click="updateUser()" />
               </div>
             </div>
           </div>
@@ -281,7 +293,6 @@ export default {
     }
   },
   created () {
-    // console.log(this.$store.getters['users/id'])
     this.fetchFromServer()
   },
   data () {
@@ -298,13 +309,15 @@ export default {
           country: null,
           gender: null,
           phone: null,
-          description: null
+          description: null,
+          img: null
         }
       },
       classes: ['Inglés A1', 'Inglés A2', 'Inglés A3'],
       genders: ['MASCULINO', 'FEMENINO', 'PERSONALIZADO'],
       isPwd: true,
       isPwdR: true,
+      selectedFile: null,
       url: 'http://localhost/Bonjour/back/public/',
       options: {
         profile: true,
@@ -359,6 +372,96 @@ export default {
     }
   },
   methods: {
+    updateUser () {
+      // Este metodo actualizara los datos del usuario
+      const data = this.user.fields
+      console.log(data)
+      api.post(`http://localhost/Bonjour/back/public/UsersController/updateUser/${data.id}`, data).then(({ data }) => {
+        console.log(data)
+      })
+    },
+    fileValidation (arch) {
+      if (arch != null) {
+        var filePath = arch // fileInput.value
+        var allowedExtensions1 = /(.jpg)$/i
+        var allowedExtensions2 = /(.png)$/i
+        var allowedExtensions3 = /(.jpeg)$/i
+        var allowedExtensions4 = /(.pdf)$/i
+        var allowedExtensions5 = /(.docx)$/i
+        if (allowedExtensions1.exec(filePath)) {
+          return 'jpg'
+        }
+        if (allowedExtensions2.exec(filePath)) {
+          return 'png'
+        }
+        if (allowedExtensions3.exec(filePath)) {
+          return 'jpeg'
+        }
+        if (allowedExtensions3.exec(filePath)) {
+          return 'jpeg'
+        }
+        if (allowedExtensions4.exec(filePath)) {
+          return 'pdf'
+        }
+        if (allowedExtensions5.exec(filePath)) {
+          return 'docx'
+        }
+      }
+    },
+    changePP () {
+      // if (this.user.fields.product_img === null) {
+      this.$refs.photoProductRef.click()
+      this.fetchFromServer()
+      // } else {
+      //   this.$q.dialog({
+      //     title: 'Confirmar',
+      //     message: '¿Cambiar foto del producto?',
+      //     persistent: true,
+      //     ok: {
+      //       color: 'green',
+      //       label: 'Si'
+      //     },
+      //     cancel: {
+      //       color: 'red',
+      //       label: 'No'
+      //     }
+      //   }).onOk(() => {
+      //     this.$refs.photoProductRef.click()
+      //   }).onCancel(() => {})
+      // }
+    },
+    uploadPhoto () {
+      if (this.$refs.photoProductRef.files[0]) {
+        var formData = new FormData()
+        formData.append('id', this.$store.getters['users/id'])
+        formData.append('imagen', this.$refs.photoProductRef.files[0], 'perfil_' + this.$store.getters['users/id'] + '.' + this.fileValidation(this.$refs.photoProductRef.files[0].name))
+        api.file('http://localhost/Bonjour/back/public/UsersController/uploadPhoto', formData).then(({ data }) => {
+          console.log(data)
+          // if (data.result) {
+          //   this.$q.notify({
+          //     position: 'top',
+          //     title: data.message.title,
+          //     message: data.message.content,
+          //     persistent: true,
+          //     label: 'OK',
+          //     color: 'positive',
+          //     actions: [{ icon: 'thumb_up', color: 'white' }]
+          //   })
+          //   this.reload()
+          // } else {
+          //   this.$q.notify({
+          //     position: 'top',
+          //     title: data.message.title,
+          //     message: data.message.content,
+          //     persistent: true,
+          //     label: 'OK',
+          //     color: 'negative',
+          //     actions: [{ icon: 'close', color: 'white' }]
+          //   })
+          // }
+        })
+      }
+    },
     changeModal (type) {
       this.options.photo = false
       switch (type) {
@@ -389,9 +492,9 @@ export default {
     fetchFromServer () {
       const id = Number(this.$store.getters['users/id'])
       api.get(`http://localhost/Bonjour/back/public/UsersController/getUser/${id}`).then(({ data }) => {
-        console.log(data)
         this.user.fields = data
         this.user.fields.password = ''
+        console.log(data)
       })
     },
     formatDate (date) {
