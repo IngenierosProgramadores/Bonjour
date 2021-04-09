@@ -7,7 +7,7 @@ class Home extends AuthController
 	protected $model;
 
 	public function __construct () {
-		$this->model = new UserModel();
+		$this->model = new User();
 	}
 	public function index()
 	{

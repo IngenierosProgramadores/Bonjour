@@ -16,7 +16,7 @@ class UsersController extends AuthController
 	}
 	public function index()
 	{
-
+		echo "HOLA";
 	}
 	public function updateUser ($id) {
 		// $request = \Config\Services::request();
@@ -104,7 +104,8 @@ class UsersController extends AuthController
 	}
 	public function getUser ($id) {
 		$user = new User();
-        $query = $user->query("SELECT *, TO_CHAR(birthdate, 'dd/mm/yyyy') as birthdate FROM users WHERE id=".$id.";");
+
+        $query = $user->query("SELECT *, DATE_FORMAT(birthdate, '%w/%m/%y') as birthdate FROM users WHERE id=".$id.";");
 		$data = $query->getRowArray();
         return $this->respond($data);
 	}
