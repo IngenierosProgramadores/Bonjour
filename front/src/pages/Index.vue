@@ -17,7 +17,7 @@
         >
           <q-carousel-slide name="first" img-src="../assets/imagenes/foto1.jpg">
             <div class="absolute-center custom-caption my-font">
-              <div class="text-h2">HABLAR UN NUEVO IDIOMA <br>EXPANDE TUS FRONTERAS</div>
+              <div class="text-h2">HABLAR UN NUEVO IDIOMA xxx <br>EXPANDE TUS FRONTERAS</div>
             </div>
           </q-carousel-slide>
           <q-carousel-slide name="second" img-src="../assets/imagenes/foto2.jpg">

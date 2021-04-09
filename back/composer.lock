@@ -422,16 +422,16 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "v1.14.0",
+            "version": "v1.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "cd46398f42c2ab191ffb0b57c07e911c7c28eb25"
+                "reference": "ed22aee8d17c7b396f74a58b1e7fefa4f90d5ef1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/cd46398f42c2ab191ffb0b57c07e911c7c28eb25",
-                "reference": "cd46398f42c2ab191ffb0b57c07e911c7c28eb25",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/ed22aee8d17c7b396f74a58b1e7fefa4f90d5ef1",
+                "reference": "ed22aee8d17c7b396f74a58b1e7fefa4f90d5ef1",
                 "shasum": ""
             },
             "require": {
@@ -454,6 +454,11 @@
                 "ext-mbstring": "Required for multibyte Unicode string functionality."
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "v1.15-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Faker\\": "src/Faker/"
@@ -476,9 +481,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FakerPHP/Faker/issues",
-                "source": "https://github.com/FakerPHP/Faker/tree/v1.14.0"
+                "source": "https://github.com/FakerPHP/Faker/tree/v.1.14.1"
             },
-            "time": "2021-03-29T08:56:34+00:00"
+            "time": "2021-03-30T06:27:33+00:00"
         },
         {
             "name": "mikey179/vfsstream",
@@ -1404,23 +1409,22 @@
         },
         {
             "name": "predis/predis",
-            "version": "v1.1.6",
+            "version": "v1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/predis/predis.git",
-                "reference": "9930e933c67446962997b05201c69c2319bf26de"
+                "reference": "b240daa106d4e02f0c5b7079b41e31ddf66fddf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/predis/predis/zipball/9930e933c67446962997b05201c69c2319bf26de",
-                "reference": "9930e933c67446962997b05201c69c2319bf26de",
+                "url": "https://api.github.com/repos/predis/predis/zipball/b240daa106d4e02f0c5b7079b41e31ddf66fddf8",
+                "reference": "b240daa106d4e02f0c5b7079b41e31ddf66fddf8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9"
             },
             "require-dev": {
-                "cweagans/composer-patches": "^1.6",
                 "phpunit/phpunit": "~4.8"
             },
             "suggest": {
@@ -1428,18 +1432,6 @@
                 "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
             },
             "type": "library",
-            "extra": {
-                "composer-exit-on-patch-failure": true,
-                "patches": {
-                    "phpunit/phpunit-mock-objects": {
-                        "Fix PHP 7 and 8 compatibility": "./tests/phpunit_mock_objects.patch"
-                    },
-                    "phpunit/phpunit": {
-                        "Fix PHP 7 compatibility": "./tests/phpunit_php7.patch",
-                        "Fix PHP 8 compatibility": "./tests/phpunit_php8.patch"
-                    }
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Predis\\": "src/"
@@ -1471,7 +1463,7 @@
             ],
             "support": {
                 "issues": "https://github.com/predis/predis/issues",
-                "source": "https://github.com/predis/predis/tree/v1.1.6"
+                "source": "https://github.com/predis/predis/tree/v1.1.7"
             },
             "funding": [
                 {
@@ -1479,7 +1471,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-11T19:18:05+00:00"
+            "time": "2021-04-04T19:34:46+00:00"
         },
         {
             "name": "psr/container",
