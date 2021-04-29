@@ -374,10 +374,20 @@ export default {
   methods: {
     updateUser () {
       // Este metodo actualizara los datos del usuario
+      this.user.fields.birthdate = this.formatDate(this.user.fields.birthdate)
       const data = this.user.fields
-      console.log(data)
       api.post(`http://localhost/Bonjour/back/public/UsersController/updateUser/${data.id}`, data).then(({ data }) => {
-        console.log(data)
+        // data me retorna lo que yo mande del back, como respuestas
+        if (data.result) {
+          this.$q.notify({
+            message: data.message,
+            position: 'top',
+            color: 'positive'
+          })
+          this.fetchFromServer()
+        } else {
+          console.log('ERROR')
+        }
       })
     },
     fileValidation (arch) {
@@ -492,9 +502,9 @@ export default {
     fetchFromServer () {
       const id = Number(this.$store.getters['users/id'])
       api.get(`http://localhost/Bonjour/back/public/UsersController/getUser/${id}`).then(({ data }) => {
+        console.log(data)
         this.user.fields = data
         this.user.fields.password = ''
-        console.log(data)
       })
     },
     formatDate (date) {

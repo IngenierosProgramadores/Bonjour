@@ -351,13 +351,14 @@ export default {
       } else {
         var formData = this.user.fields
         api.post('http://localhost/Bonjour/back/public/UsersController/create', formData).then(({ data }) => {
-          this.$q.notify({
-            message: data.message,
-            position: 'top',
-            color: (data.result ? 'positive' : 'warning')
-          })
-          if (data.error) {
+          if (data.result) {
+            this.$q.notify({
+              message: data.message,
+              position: 'top',
+              color: (data.result ? 'positive' : 'warning')
+            })
             this.$q.loading.hide()
+            // El this.$router.push('url') se utiliza para mandar a llamar otro modulo o ventana
             this.$router.push('/Login')
           } else {
             this.$q.loading.hide()
