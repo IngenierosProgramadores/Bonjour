@@ -8,14 +8,14 @@
       <!-- <q-btn stretch flat label="" icon="notifications" /> -->
       <div class="col-md-1"></div>
       <div class="col-sm-5">
-        <div class="my-font text-h6 gt-md">
+        <div class="my-font text-h6">
           <label for="" class="q-pr-xl">Nuestros Cursos</label>
           <label for="" class="q-pr-xl">Nosotros</label>
           <label for="" class="q-pr-xl">Contacto</label>
         </div>
       </div>
       <div class="q-pa-xs">
-        <img src="../assets/header.png" height="50px" >
+        <img src="../assets/header.png" height="50px" @click="main()">
       </div>
       <q-toolbar-title></q-toolbar-title>
       <div class="gt-sm">
@@ -170,6 +170,9 @@ export default ({
     }
   },
   methods: {
+    main () {
+      this.$router.push('/')
+    },
     openURL,
     profile () {
       console.log('Abrir perfil')

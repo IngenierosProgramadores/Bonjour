@@ -16,7 +16,6 @@ class UsersController extends AuthController
 	}
 	public function index()
 	{
-		echo "HOLA";
 	}
 	public function updateUser ($id) {
 		// $request = \Config\Services::request();
@@ -27,7 +26,7 @@ class UsersController extends AuthController
 			'email' => $request['email'],
 			'birthdate' => $request['birthdate'],
 			'country' => $request['country'],
-			'gender' => $request['email']
+			'gender' => $request['gender']
 		];
 		$model = new User();
 		if ($model->update($id, $data)){
@@ -37,7 +36,7 @@ class UsersController extends AuthController
 			$content['result'] = false;
 			$content['message'] = 'Ha ocurrido un error al intentar crear el usuario';
 		}
-		// return $this->respond($content); // el respond es para retornar los datos
+		return $this->respond($content); // el respond es para retornar los datos
 	}
 
 	public function uploadPhoto (){
@@ -105,7 +104,7 @@ class UsersController extends AuthController
 	public function getUser ($id) {
 		$user = new User();
 
-        $query = $user->query("SELECT *, DATE_FORMAT(birthdate, '%w/%m/%y') as birthdate FROM users WHERE id=".$id.";");
+        $query = $user->query("SELECT *, DATE_FORMAT(birthdate, '%d/%m/%y') as birthdate FROM users WHERE id=".$id.";");
 		$data = $query->getRowArray();
         return $this->respond($data);
 	}
