@@ -11,7 +11,8 @@ class Auth extends ResourceController
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
             header("Access-Control-Allow-Headers: Origin, Authorization, X-Requested-With, Content-Type, Accept");
-            header('Access-Control-Allow-Credentials: true');      
+            header('Access-Control-Allow-Credentials: true');  
+             
         }  
         if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
           if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))          

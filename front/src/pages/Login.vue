@@ -118,7 +118,7 @@ export default {
       this.loading = true
       api.post('http://localhost/Bonjour/back/public/AuthController/login', params).then(({ data }) => {
         this.loading = false
-        console.log(data)
+        console.log('Mis datoss' + data)
         if (data.result) {
           localStorage.setItem('JWT', data.jwt)
           this.$axios.defaults.headers.common.Authorization = `Bearer ${data.jwt}`

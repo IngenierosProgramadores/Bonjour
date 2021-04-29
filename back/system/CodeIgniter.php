@@ -467,7 +467,7 @@ class CodeIgniter
 
 		// Save our current URI as the previous URI in the session
 		// for safer, more accurate use with `previous_url()` helper function.
-		$this->storePreviousURL((string) current_url(true));
+		$this->storePreviousURL($_SERVER['REQUEST_URI']);
 
 		unset($uri);
 
