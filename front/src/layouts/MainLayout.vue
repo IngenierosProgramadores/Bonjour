@@ -9,7 +9,7 @@
       <div class="col-md-1"></div>
       <div class="col-sm-5">
         <div class="my-font text-h6">
-          <label for="" class="q-pr-xl">Nuestros Cursos</label>
+          <label for="" class="q-pr-xl" @click="nuestrosCursos()">Nuestros Cursos</label>
           <label for="" class="q-pr-xl">Nosotros</label>
           <label for="" class="q-pr-xl">Contacto</label>
         </div>
@@ -181,6 +181,9 @@ export default ({
     logOut () {
       localStorage.removeItem('JWT')
       window.location.reload()
+    },
+    nuestrosCursos () {
+      this.$router.push('/NuestrosCursos')
     },
     fetchFromServer () {
       api.get(this.url + 'UsersController/getUsers').then(({ data }) => {

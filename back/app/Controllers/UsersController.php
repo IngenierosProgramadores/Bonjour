@@ -44,7 +44,7 @@ class UsersController extends AuthController
 		$user = new User();
 		$db      = \Config\Database::connect();
 		$builder = $db->table('users');
-        // $query = $user->query("SELECT id, name,img FROM users WHERE id=".$request['id'].";");
+        // $query = $user->query("SELECT id, name,img FROM users WHERE id=".$request['id']."");
 		// $data = $query->getRowArray();
 		$upload_dir1 = $_SERVER["DOCUMENT_ROOT"] . '/Bonjour/back/public/assets/profiles/'; //Directorio de carga
 		$img1 = null;
