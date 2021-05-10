@@ -4,6 +4,7 @@ import MainLayout from 'layouts/MainLayout'
 import Register from 'pages/Register'
 import NuestrosCursos from 'pages/cursos/NuestrosCursos'
 import ListaCursos from '../pages/cursos/listacursos/ListaCursos'
+import InformacionCursos from '../pages/cursos/info/InformacionCursos'
 const routes = [
   {
     path: '/Login',
@@ -20,7 +21,8 @@ const routes = [
       { path: '', component: () => import('pages/Index.vue') },
       { path: 'Profile', component: () => import('pages/users/Profile.vue') },
       { path: 'NuestrosCursos', component: () => import('pages/cursos/NuestrosCursos') },
-      { path: 'ListaCursos', component: () => import('pages/cursos/listacursos/ListaCursos') }
+      { path: 'ListaCursos', component: () => import('pages/cursos/listacursos/ListaCursos') },
+      { path: 'InformacionCursos', component: () => import('pages/cursos/info/InformacionCursos') }
     ]
   },
   {
@@ -30,6 +32,10 @@ const routes = [
   {
     path: '/ListaCursos',
     component: ListaCursos
+  },
+  {
+    path: '/InformacionCursos',
+    component: InformacionCursos
   },
 
   // Always leave this as last one,

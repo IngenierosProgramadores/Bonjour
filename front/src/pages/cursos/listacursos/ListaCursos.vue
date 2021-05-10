@@ -5,14 +5,24 @@
         <div class="row">
           <!-- Muestra los videos -->
           <div class="col-8 q-pa-md justify-center">
-            <q-video
-              :ratio="16 / 9"
-              src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
-            />
+            <q-video :ratio="16 / 9" src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0" />
             <!-- Se inicia el apartado de agregar comentarios -->
             <q-card>
               <q-card-section>
-                <div class="text-h6">Haz un comentario</div>
+                <div class="row">
+                  <div class="col-8">
+                    <div class="text-h6">Haz un comentario</div>
+                  </div>
+                  <div class="col">
+                    <div class="row justify-center">
+                      <i class="far fa-star" style="font-size: 25px; padding-right: 10px; cursor: pointer"></i>
+                    <i class="far fa-star" style="font-size: 25px; padding-right: 10px; cursor: pointer"></i>
+                    <i class="far fa-star" style="font-size: 25px; padding-right: 10px; cursor: pointer"></i>
+                    <i class="far fa-star" style="font-size: 25px; padding-right: 10px; cursor: pointer"></i>
+                    <i class="far fa-star" style="font-size: 25px; padding-right: 10px; cursor: pointer"></i>
+                    </div>
+                  </div>
+                </div>
               </q-card-section>
 
               <q-separator />
@@ -91,5 +101,11 @@ export default {
 <style>
 #video {
   height: 200px;
+}
+#color{
+  background: blue;
+}
+#color1{
+  background: brown;
 }
 </style>
